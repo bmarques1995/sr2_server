@@ -40,6 +40,8 @@ def clone_and_checkout(repo, destination, commit_hash=None, branch=None, patch=N
         run(f'git reset --hard {commit_hash}', cwd=destination)
     if patch:
         if os.path.exists(patch):
+            run(f'git reset --hard', cwd=destination)
+            run(f'git clean -dfx', cwd=destination)
             run(f'git apply -v "{patch}"', cwd=destination)
         else:
             print(f"Patch file {patch} not found, skipping patch application.")
