@@ -15,6 +15,11 @@ file(GLOB_RECURSE SR2_LIB_HDRS RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "components/
 file(GLOB_RECURSE SR2_LIB_SRCS RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "components/*.cpp")
 
 trace_dependency(NAME boost INSTALL_SCRIPT "${PROJECT_SOURCE_DIR}/installers/boost.py" COMPONENT_INFIX "_" LIMIT_SEARCH_PATHS)
+trace_dependency(NAME zlib INSTALL_SCRIPT "${PROJECT_SOURCE_DIR}/installers/zlib_ng.py" LIMIT_SEARCH_PATHS)
+trace_dependency(NAME zstd INSTALL_SCRIPT "${PROJECT_SOURCE_DIR}/installers/zstd.py" LIMIT_SEARCH_PATHS)
+trace_dependency(NAME brotli INSTALL_SCRIPT "${PROJECT_SOURCE_DIR}/installers/brotli.py" LIMIT_SEARCH_PATHS)
+trace_dependency(NAME OpenSSL INSTALL_SCRIPT "${PROJECT_SOURCE_DIR}/installers/openssl.py" LIMIT_SEARCH_PATHS)
+trace_dependency(NAME jsoncpp INSTALL_SCRIPT "${PROJECT_SOURCE_DIR}/installers/jsoncpp.py" LIMIT_SEARCH_PATHS)
 trace_dependency(NAME Crow INSTALL_SCRIPT "${PROJECT_SOURCE_DIR}/installers/crow.py" LIMIT_SEARCH_PATHS)
 
 add_library(${TARGET_LIB_NAME} SHARED ${SR2_LIB_HDRS} ${SR2_LIB_SRCS})
