@@ -1,0 +1,56 @@
+From f8979277d6481a62e75c3d6879cdcc99824a8bc0 Mon Sep 17 00:00:00 2001
+From: bmarques1995 <testebash@outlook.com>
+Date: Mon, 8 Sep 2025 15:01:31 -0300
+Subject: [PATCH] diff
+
+---
+ CMakeLists.txt            | 10 ++++++++--
+ cmake/CrowConfig.cmake.in |  2 +-
+ 2 files changed, 9 insertions(+), 3 deletions(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 78f042480..8e58578f2 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -73,10 +73,10 @@ if(CROW_USE_BOOST)
+ 		# Use Boost CMake module from Boost instead of the one from CMake
+ 		cmake_policy(SET CMP0167 NEW)
+ 	endif()
+-	find_package(Boost 1.64 COMPONENTS system date_time REQUIRED)
++	find_package(Boost 1.64 COMPONENTS system date_time asio REQUIRED)
+ 	target_link_libraries(Crow
+ 		INTERFACE
+-			Boost::boost Boost::system Boost::date_time
++			Boost::boost Boost::system Boost::date_time Boost::asio
+ 	)
+ 	target_compile_definitions(Crow INTERFACE CROW_USE_BOOST)
+ else()
+@@ -200,6 +200,12 @@ if(CROW_INSTALL)
+ 		DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/Crow"
+ 	)
+ 
++	if(CROW_USE_BOOST)
++		set(ASIO_PACKAGE_PROVIDER "Boost 1.89 COMPONENTS system date_time asio REQUIRED")
++	else()
++		set(ASIO_PACKAGE_PROVIDER "asio")
++	endif()
++
+ 	include(CMakePackageConfigHelpers)
+ 	configure_package_config_file(
+ 		"${CMAKE_CURRENT_SOURCE_DIR}/cmake/CrowConfig.cmake.in"
+diff --git a/cmake/CrowConfig.cmake.in b/cmake/CrowConfig.cmake.in
+index 4c553c9a6..f58bb902e 100644
+--- a/cmake/CrowConfig.cmake.in
++++ b/cmake/CrowConfig.cmake.in
+@@ -5,7 +5,7 @@ include(CMakeFindDependencyMacro)
+ get_filename_component(CROW_CMAKE_DIR "${CMAKE_CURRENT_LIST_FILE}" PATH)
+ 
+ list(APPEND CMAKE_MODULE_PATH ${CROW_CMAKE_DIR})
+-find_dependency(asio)
++find_dependency(@ASIO_PACKAGE_PROVIDER@)
+ list(REMOVE_AT CMAKE_MODULE_PATH -1)
+ 
+ set(CROW_INSTALLED_FEATURES "@CROW_FEATURES@")
+-- 
+2.49.0.windows.1
+
