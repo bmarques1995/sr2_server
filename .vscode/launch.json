@@ -1,0 +1,12 @@
+{
+    "configurations": [
+        {
+            "type": "lldb-dap",
+            "request": "launch",
+            "name": "Linux Debug",
+            "program": "${workspaceFolder}/Linux/Debug/bin/sr2server",
+            "cwd": "${workspaceFolder}/Linux/Debug/bin",
+            "args": ["-r", "7500"],
+        }
+    ],
+}

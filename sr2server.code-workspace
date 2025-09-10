@@ -1,0 +1,29 @@
+{
+  "folders": [
+    {
+      "path": "."
+    }
+  ],
+  "settings": {
+    // Generate compile_commands.json for clangd and IntelliSense
+    "cmake.exportCompileCommandsFile": true,
+    "cmake.buildDirectory": "${workspaceFolder}/build",
+
+    // Force LSP to see your include directories
+    "C_Cpp.default.configurationProvider": "ms-vscode.cmake-tools",
+    "C_Cpp.default.includePath": [
+      "${workspaceFolder}/Linux/Debug/include",
+      "${workspaceFolder}/sr2_server/src",
+      "${workspaceFolder}/sr2_server/components",
+      "${workspaceFolder}/sr2_server/components/commands"
+    ],
+
+    // If you use clangd instead of Microsoft C++ extension
+    "clangd.arguments": [
+      "--compile-commands-dir=${workspaceFolder}/build",
+      "-I${workspaceFolder}/sr2_server/src",
+      "-I${workspaceFolder}/sr2_server/components",
+      "-I${workspaceFolder}/sr2_server/components/commands"
+    ]
+  }
+}

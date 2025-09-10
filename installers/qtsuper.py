@@ -3,6 +3,10 @@ import platform
 
 def build_qt_package(name, version, build_mode, install_prefix, module_destination, vs_compiler):
     os_name = platform.system().lower()
+    # Default to gcc/g++ on non-Windows platforms, can be replaced with clang/clang++ if desired
+    c_compiler= "clang"
+    cxx_compiler= "clang++"
+    asm_compiler= "nasm"
     if os_name == "windows":
         if not (vs_compiler):
             print("Visual Studio compiler version is required on Windows.")
@@ -13,12 +17,14 @@ def build_qt_package(name, version, build_mode, install_prefix, module_destinati
 
     if os_name == "windows":
         append_vs_ninja_host(vs_compiler)
-    
+        c_compiler= "cl"
+        cxx_compiler= "cl"
+        asm_compiler= "ml64"
 
     print(f"Installing {name} with build mode: {build_mode}, install prefix: {install_prefix}, module destination: {module_destination}")
 
     qt_package_src = append_paths(module_destination, "modules", name)
-    qt_package_build = append_paths(module_destination, "dependencies", "windows", name)
+    qt_package_build = append_paths(module_destination, "dependencies", os_name, name)
 
     clone_and_checkout(f"https://code.qt.io/qt/{name}.git", destination=qt_package_src, branch=version)
 
@@ -27,7 +33,7 @@ def build_qt_package(name, version, build_mode, install_prefix, module_destinati
         f'-DQT_FEATURE_force_bundled_libs=ON '
         f'-DCMAKE_INSTALL_PREFIX="{install_prefix}" '
         f'-DCMAKE_PREFIX_PATH="{install_prefix}" '
-        f'-DCMAKE_C_COMPILER=cl -DCMAKE_CXX_COMPILER=cl -DCMAKE_ASM_COMPILER=ml64 '
+        f'-DCMAKE_C_COMPILER={c_compiler} -DCMAKE_CXX_COMPILER={cxx_compiler} -DCMAKE_ASM_COMPILER={asm_compiler} '
         f'-DCMAKE_BUILD_TYPE="{build_mode}"'
     )
 

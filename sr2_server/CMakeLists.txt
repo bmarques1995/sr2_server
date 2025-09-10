@@ -28,15 +28,16 @@ trace_dependency(NAME curl INSTALL_SCRIPT "${PROJECT_SOURCE_DIR}/installers/libc
 trace_dependency(NAME Qt6 COMPONENTS Core Sql INSTALL_SCRIPT "${PROJECT_SOURCE_DIR}/installers/qtbase.py" LIMIT_SEARCH_PATHS)
 trace_dependency(NAME range-v3 INSTALL_SCRIPT "${PROJECT_SOURCE_DIR}/installers/range3.py" LIMIT_SEARCH_PATHS)
 trace_dependency(NAME tabulate INSTALL_SCRIPT "${PROJECT_SOURCE_DIR}/installers/tabulate.py" LIMIT_SEARCH_PATHS)
-trace_dependency(NAME TinyORM INSTALL_SCRIPT "${PROJECT_SOURCE_DIR}/installers/tinyorm.py" LIMIT_SEARCH_PATHS)
+trace_dependency(NAME TinyOrm INSTALL_SCRIPT "${PROJECT_SOURCE_DIR}/installers/tinyorm.py" LIMIT_SEARCH_PATHS)
 
 add_library(${TARGET_LIB_NAME} SHARED ${SR2_LIB_HDRS} ${SR2_LIB_SRCS})
 target_include_directories(${TARGET_LIB_NAME} PUBLIC
 	$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/components>
+	$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/components/commands>
 	$<BUILD_INTERFACE:${CMAKE_PREFIX_PATH}/include>
 )
 set_cxx_project_standards(${TARGET_LIB_NAME} 20 FALSE)
-target_link_libraries(${TARGET_LIB_NAME} PUBLIC Crow::Crow)
+target_link_libraries(${TARGET_LIB_NAME} PUBLIC Crow::Crow TinyOrm::TinyOrm)
 if(WIN32)
 	target_compile_definitions(${TARGET_LIB_NAME} PRIVATE LIB_BUILD)
 	target_compile_definitions(${TARGET_LIB_NAME} INTERFACE LIB_EXPORT)
