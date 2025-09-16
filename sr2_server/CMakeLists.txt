@@ -29,11 +29,23 @@ trace_dependency(NAME Qt6 COMPONENTS Core Sql INSTALL_SCRIPT "${PROJECT_SOURCE_D
 trace_dependency(NAME range-v3 INSTALL_SCRIPT "${PROJECT_SOURCE_DIR}/installers/range3.py" LIMIT_SEARCH_PATHS)
 trace_dependency(NAME tabulate INSTALL_SCRIPT "${PROJECT_SOURCE_DIR}/installers/tabulate.py" LIMIT_SEARCH_PATHS)
 trace_dependency(NAME TinyOrm INSTALL_SCRIPT "${PROJECT_SOURCE_DIR}/installers/tinyorm.py" LIMIT_SEARCH_PATHS)
+trace_dependency(NAME flatbuffers INSTALL_SCRIPT "${PROJECT_SOURCE_DIR}/installers/flatbuffers.py" LIMIT_SEARCH_PATHS)
+
+if(WIN32)
+	set(PYTHON_EXEC python)
+else()
+	set(PYTHON_EXEC python3)
+endif()
+
+file(GLOB_RECURSE FBS_FILES ABSOLUTE ${CMAKE_CURRENT_SOURCE_DIR}components/fb_schemas/ "*.fbs")
+execute_process(COMMAND ${PYTHON_EXEC} ${PROJECT_SOURCE_DIR}/installers/flatc_gen_h.py ${CMAKE_INSTALL_PREFIX} ${CMAKE_CURRENT_SOURCE_DIR}/components/fb_schemas ${FBS_FILES})
 
 add_library(${TARGET_LIB_NAME} SHARED ${SR2_LIB_HDRS} ${SR2_LIB_SRCS})
 target_include_directories(${TARGET_LIB_NAME} PUBLIC
 	$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/components>
 	$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/components/commands>
+	$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/components/fb_schemas>
+	$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/components/settings>
 	$<BUILD_INTERFACE:${CMAKE_PREFIX_PATH}/include>
 )
 set_cxx_project_standards(${TARGET_LIB_NAME} 20 FALSE)

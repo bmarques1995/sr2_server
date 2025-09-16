@@ -1,0 +1,25 @@
+From a1508aa262ac3e9394a68948f21973eb2ef3b3c8 Mon Sep 17 00:00:00 2001
+From: bmarques1995 <testebash@outlook.com>
+Date: Wed, 10 Sep 2025 20:45:35 -0300
+Subject: [PATCH] patch
+
+---
+ CMakeLists.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index e7038f89..cd8ab168 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -660,7 +660,7 @@ if(FLATBUFFERS_INSTALL)
+     install(
+       TARGETS flatbuffers_shared EXPORT FlatBuffersSharedTargets
+       ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+-      RUNTIME DESTINATION ${CMAKE_INSTALL_LIBDIR}
++      RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+       LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+       INCLUDES DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
+     )
+-- 
+2.49.0.windows.1
+

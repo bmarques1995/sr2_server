@@ -1,0 +1,19 @@
+// schema.fbs
+namespace SR2Config;
+
+struct json_hash_buffer {
+  buffer: [ubyte: 64];
+}
+
+table database_info {
+  user: string;
+  password: string;
+  name: string;
+}
+
+table Root {
+  json_hash: json_hash_buffer;
+  database: database_info;
+}
+
+root_type Root;
