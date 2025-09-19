@@ -39,3 +39,47 @@ def build_qt_package(name, version, build_mode, install_prefix, module_destinati
 
     run(f'cmake --build "{qt_package_build}" --parallel')
     run(f'cmake --install "{qt_package_build}"')
+
+def build_sql_plugin(build_mode, install_prefix, module_destination, vs_compiler):
+    os_name = platform.system().lower()
+    # -DMySQL_INCLUDE_DIR="C:\mysql-8.0.22-winx64\include" -DMySQL_LIBRARY="C:\mysql-8.0.22-winx64\lib\libmysql.lib"
+    # Default to gcc/g++ on non-Windows platforms, can be replaced with clang/clang++ if desired
+    c_compiler= "clang"
+    cxx_compiler= "clang++"
+    asm_compiler= "nasm"
+    lib_extension = "so"
+    if os_name == "windows":
+        lib_extension = "lib"
+        if not (vs_compiler):
+            print("Visual Studio compiler version is required on Windows.")
+            return
+    else:
+        lib_extension = "so"
+    if not (build_mode and install_prefix and module_destination):
+        print("Invalid build type or install path. Please provide either 'Debug' or 'Release', a valid prefix path and a valid Module Destination")
+        return
+
+    if os_name == "windows":
+        append_vs_ninja_host(vs_compiler)
+        c_compiler= "cl"
+        cxx_compiler= "cl"
+        asm_compiler= "ml64"
+
+    qt_package_src = append_paths(module_destination, "modules", "qtbase", "src", "plugins", "sqldrivers")
+    qt_package_build = append_paths(module_destination, "dependencies", os_name, "qtsqlplugin")
+
+    run(
+        f'cmake -S "{qt_package_src}" -B "{qt_package_build}" -G Ninja '
+        f'-DFEATURE_system_sqlite=OFF '
+        f'-DFEATURE_sql_mysql=ON '
+        f'-DMySQL_ROOT="{install_prefix}" '
+        f'-DMySQL_LIBRARY="{install_prefix}/lib/libmariadb.{lib_extension}" '
+        f'-DPostgreSQL_ROOT="{install_prefix}" '
+        f'-DCMAKE_INSTALL_PREFIX="{install_prefix}" '
+        f'-DCMAKE_PREFIX_PATH="{install_prefix}" '
+        f'-DCMAKE_C_COMPILER={c_compiler} -DCMAKE_CXX_COMPILER={cxx_compiler} -DCMAKE_ASM_COMPILER={asm_compiler} '
+        f'-DCMAKE_BUILD_TYPE="{build_mode}"'
+    )
+
+    run(f'cmake --build "{qt_package_build}" --parallel')
+    run(f'cmake --install "{qt_package_build}"')

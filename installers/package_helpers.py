@@ -28,6 +28,13 @@ def append_vs_ninja_host(compiler_location):
     current_path = os.environ.get("PATH", "")
     os.environ["PATH"] = f"{ninja_path};{current_path}"
 
+def append_prefix_to_path(install_prefix):
+    include_path = os.path.join(install_prefix, "include")
+    lib_path = os.path.join(install_prefix, "lib")
+    bin_path = os.path.join(install_prefix, "bin")
+    current_path = os.environ.get("PATH", "")
+    os.environ["PATH"] = f"{install_prefix};{include_path};{lib_path};{bin_path};{current_path}"
+
 def run(cmd, cwd=None):
     print(f"> {cmd}")
     subprocess.check_call(cmd, shell=True, cwd=cwd)

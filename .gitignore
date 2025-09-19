@@ -6,3 +6,7 @@ FreeBSD/
 modules/
 dependencies/
 __pycache__/
+.lin_venv/
+.venv/
+.win_venv/
+.bsd_venv/
