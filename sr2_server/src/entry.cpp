@@ -4,6 +4,7 @@
 #include "RunServer.hpp"
 #include <unordered_map>
 #include <string>
+#include <QCoreApplication>
 
 const std::unordered_map<std::string, uint32_t> standalone_cmd_option = {
     {"--help", 1},
@@ -23,6 +24,7 @@ int main(int argc, char** argv)
     else
     {
         std::string arg = argv[1];
+        const QCoreApplication app(argc, argv);
         auto it = standalone_cmd_option.find(arg);
         if (it != standalone_cmd_option.end()) {
             switch (it->second)

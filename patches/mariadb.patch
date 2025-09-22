@@ -1,6 +1,6 @@
-From b6efa3fabaa843404403d644b6af369d669c6eed Mon Sep 17 00:00:00 2001
-From: bmarques1995 <testebash@outlook.com>
-Date: Fri, 19 Sep 2025 17:23:53 -0300
+From 01aaf6663dc883b6c8d8038e97a487cfb45c664c Mon Sep 17 00:00:00 2001
+From: bmarques1995 <brunosmarques1995@hotmail.com>
+Date: Sun, 21 Sep 2025 15:36:31 -0300
 Subject: [PATCH] patch
 
 ---
@@ -11,7 +11,7 @@ Subject: [PATCH] patch
  create mode 100644 libmariadb/config.cmake.in
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 5e4a7198..69d6c9da 100644
+index 5e4a7198..f9e3d690 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
 @@ -42,9 +42,9 @@ ADD_OPTION(WITH_BOOST_CONTEXT
@@ -47,9 +47,9 @@ index 5e4a7198..69d6c9da 100644
 +  SET(INSTALL_LIBDIR ${CMAKE_INSTALL_PREFIX}/lib)
 +  SET(INSTALL_INCLUDEDIR ${CMAKE_INSTALL_PREFIX}/include)
 +  IF(WIN32)
-+    SET(INSTALL_PLUGINDIR ${INSTALL_BINDIR}/plugins)
++    SET(INSTALL_PLUGINDIR bin/plugins)
 +  ELSE()
-+    SET(INSTALL_PLUGINDIR ${INSTALL_LIBDIR}/plugins)
++    SET(INSTALL_PLUGINDIR lib/plugins)
 +  ENDIF()
 +  SET(INSTALL_PCDIR ${CMAKE_INSTALL_PREFIX}/lib/pkgconfig)
 +ELSE()
@@ -170,5 +170,5 @@ index 00000000..25b8747b
 +
 +include("${CMAKE_CURRENT_LIST_DIR}/@MARIADB_TARGETS_EXPORT_NAME@.cmake")
 -- 
-2.49.0.windows.1
+2.49.0
 

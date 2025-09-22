@@ -1,11 +1,37 @@
 #include "RunServer.hpp"
 #include <crow.h>
 #include <crow/query_string.h>
+#include <orm/db.hpp>
 
 void SR2Server::RunServer::Run(uint16_t port)
 {
     crow::SimpleApp app; //define your crow application
 
+    auto manager = Orm::DB::create({
+        {"driver",          "QMYSQL"},
+        {"host",            qEnvironmentVariable("DB_HOST", "127.0.0.1")},
+        {"port",            qEnvironmentVariable("DB_PORT", "3306")},
+        {"database",        qEnvironmentVariable("DB_DATABASE", "sr2testdb")},
+        {"username",        qEnvironmentVariable("DB_USERNAME", "sr2_sample")},
+        {"password",        qEnvironmentVariable("DB_PASSWORD", "sample_sr2")},
+        {"charset",         qEnvironmentVariable("DB_CHARSET", "utf8mb4")},
+        {"collation",       qEnvironmentVariable("DB_COLLATION", "utf8mb4_0900_ai_ci")},
+        {"timezone",        "+00:00"},
+        /* Specifies what time zone all QDateTime-s will have, the overridden default is
+        the QTimeZone::UTC, set to the QTimeZone::LocalTime or
+        QtTimeZoneType::DontConvert to use the system local time. */
+        {"qt_timezone",     QVariant::fromValue(QTimeZone::UTC)},
+        {"prefix",          ""},
+        {"prefix_indexes",  false},
+        {"strict",          true},
+        {"engine",          "InnoDB"},
+        {"options",         QVariantHash()},
+    });
+
+    std::cout << "Database connection successful on: " << manager->hostName().toStdString() << "!" << std::endl;
+    std::cout << "Database name: " << manager->databaseName().toStdString() << std::endl;
+    std::cout << "Database user: " << manager->connection().getName().toStdString() << std::endl;
+    
     //define your endpoint at the root directory
     CROW_ROUTE(app, "/").methods(crow::HTTPMethod::GET)
     ([](const crow::request& req)

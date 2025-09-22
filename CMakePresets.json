@@ -20,6 +20,8 @@
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Debug",
                 "CMAKE_PREFIX_PATH": "${sourceDir}/Linux/Debug",
+                "Qt6QMYSQLDriverPlugin_DIR": "${sourceDir}/Linux/Debug/lib/cmake/Qt6Sql",
+                "Qt6QSQLiteDriverPlugin_DIR": "${sourceDir}/Linux/Debug/lib/cmake/Qt6Sql",
                 "CMAKE_INSTALL_PREFIX": "${sourceDir}/Linux/Debug"
             }
         },
@@ -31,6 +33,8 @@
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Release",
                 "CMAKE_PREFIX_PATH": "${sourceDir}/Linux/Release",
+                "Qt6QMYSQLDriverPlugin_DIR": "${sourceDir}/Linux/Release/lib/cmake/Qt6Sql",
+                "Qt6QSQLiteDriverPlugin_DIR": "${sourceDir}/Linux/Release/lib/cmake/Qt6Sql",
                 "CMAKE_INSTALL_PREFIX": "${sourceDir}/Linux/Release"
             }
         },
@@ -52,6 +56,8 @@
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Debug",
                 "CMAKE_PREFIX_PATH": "${sourceDir}/Windows/Debug",
+                "Qt6QMYSQLDriverPlugin_DIR": "${sourceDir}/Windows/Debug/lib/cmake/Qt6Sql",
+                "Qt6QSQLiteDriverPlugin_DIR": "${sourceDir}/Windows/Debug/lib/cmake/Qt6Sql",
                 "CMAKE_INSTALL_PREFIX": "${sourceDir}/Windows/Debug"
             }
         },
@@ -62,6 +68,8 @@
             "installDir": "${sourceDir}/Windows/Release",
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Release",
+                "Qt6QMYSQLDriverPlugin_DIR": "${sourceDir}/Windows/Release/lib/cmake/Qt6Sql",
+                "Qt6QSQLiteDriverPlugin_DIR": "${sourceDir}/Windows/Release/lib/cmake/Qt6Sql",
                 "CMAKE_PREFIX_PATH": "${sourceDir}/Windows/Release",
                 "CMAKE_INSTALL_PREFIX": "${sourceDir}/Windows/Release"
             }
